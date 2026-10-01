@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gentle Steps | Specialized Digital Mental Health & Care Pathways</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Fredoka & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Tailwind Custom Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        popOrange: '#FF5722',
+                        popYellow: '#FFC107',
+                        popTeal: '#00BFA5',
+                        popBlue: '#29B6F6',
+                        popPink: '#FF4081',
+                        popPurple: '#7C4DFF',
+                        popDark: '#1E1E24',
+                        popCream: '#FFFBEA',
+                    },
+                    fontFamily: {
+                        display: ['Fredoka', 'sans-serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'pop-sm': '3px 3px 0px #1E1E24',
+                        'pop': '6px 6px 0px #1E1E24',
+                        'pop-lg': '10px 10px 0px #1E1E24',
+                    },
+                    keyframes: {
+                        wiggle: {
+                            '0%, 100%': { transform: 'rotate(-4deg)' },
+                            '50%': { transform: 'rotate(4deg)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-12px)' },
+                        },
+                        bounceSlow: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-8px)' },
+                        }
+                    },
+                    animation: {
+                        wiggle: 'wiggle 2.5s ease-in-out infinite',
+                        float: 'float 3.5s ease-in-out infinite',
+                        'bounce-slow': 'bounceSlow 2s ease-in-out infinite',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            color-scheme: light;
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #FF5722;
+            color: #1E1E24;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+        .display-font {
+            font-family: 'Fredoka', sans-serif;
+        }
+        .pop-border {
+            border: 4px solid #1E1E24;
+        }
+        .pop-border-sm {
+            border: 3px solid #1E1E24;
+        }
+        ::selection { background: #FFC107; color: #1E1E24; }
+        a, button { -webkit-tap-highlight-color: transparent; }
+        a:focus-visible, button:focus-visible {
+            outline: 4px solid #7C4DFF;
+            outline-offset: 4px;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                scroll-behavior: auto !important;
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-popYellow selection:text-popDark">
+
+    <!-- Navigation Bar -->
+    <nav class="sticky top-0 z-40 bg-popYellow border-b-4 border-popDark transition-all duration-300" id="main-nav">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                
+                <!-- Logo with Header Doodle Spot -->
+                <a href="#" class="flex items-center gap-3 group">
+                    <div class="relative">
+                        <!-- DOODLE PLACEHOLDER: Logo Icon/Mascot -->
+                        <div class="w-12 h-12 rounded-2xl bg-popPink pop-border flex items-center justify-center shadow-pop group-hover:rotate-6 transition-transform overflow-hidden">
+                            <img src="https://i.pinimg.com/1200x/8d/e5/9d/8de59dfd676d788b5d26a86359838072.jpg " alt="Logo Doodle" class="w-full h-full object-cover hidden" id="logo-doodle">
+                            <i data-lucide="footprints" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <!-- Tiny Accent Doodle Badge -->
+                        <div class="absolute -top-2 -right-2 w-6 h-6 bg-popTeal rounded-full pop-border-sm flex items-center justify-center animate-wiggle">
+                            <i data-lucide="sparkle" class="w-3 h-3 text-white"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="text-2xl font-bold tracking-tight text-popDark block display-font">Gentle Steps</span>
+                        <span class="text-[11px] tracking-wider uppercase text-popDark font-extrabold block -mt-1">Grief & Trauma Care</span>
+                    </div>
+                </a>
+
+                <!-- Nav Links -->
+                <div class="hidden md:flex items-center space-x-6 text-base font-extrabold text-popDark">
+                    <a href="#specializations" class="hover:bg-popCream px-3 py-1.5 rounded-xl pop-border-sm transition-all shadow-pop-sm">Specializations</a>
+                    <a href="#how-it-works" class="hover:bg-popCream px-3 py-1.5 rounded-xl pop-border-sm transition-all shadow-pop-sm">How It Works</a>
+                    <a href="#therapists" class="hover:bg-popCream px-3 py-1.5 rounded-xl pop-border-sm transition-all shadow-pop-sm">Therapists</a>
+                    <a href="#faq" class="hover:bg-popCream px-3 py-1.5 rounded-xl pop-border-sm transition-all shadow-pop-sm">FAQ</a>
+                </div>
+
+                <!-- Action Button -->
+                <div class="hidden md:flex items-center gap-4">
+                    <button onclick="openWizardModal()" class="bg-popTeal hover:bg-teal-300 text-popDark font-extrabold px-6 py-3 rounded-2xl pop-border shadow-pop hover:shadow-pop-lg hover:-translate-y-1 transition-all flex items-center gap-2 display-font">
+                        <span>Find Your Specialist</span>
+                        <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-12 pb-24 md:pt-16 md:pb-32 bg-popOrange overflow-hidden">
+        
+        <!-- FLOATING DOODLE BACKGROUND SLOTS (Absolute Positioned Stickers) -->
+       
+
+    
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+                
+                <!-- Left Hero Content -->
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left relative">
+                    
+                    <!-- DOODLE PLACEHOLDER: Text Accent/Arrow Doodle pointing to heading -->
+                  
+
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-popYellow pop-border shadow-pop text-popDark font-extrabold text-sm animate-wiggle">
+                        <i data-lucide="heart" class="w-4 h-4 text-popPink fill-popPink"></i>
+                        <span>Grief-Focused Telehealth Platform</span>
+                    </div>
+
+                    <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-popCream display-font leading-tight tracking-tight drop-shadow-[4px_4px_0px_#1E1E24]">
+                        A Safe Space to Heal, Grow, and <span class="bg-popYellow text-popDark px-3 py-1 rounded-2xl pop-border inline-block rotate-1 shadow-pop">Reclaim Peace</span>
+                    </h1>
+
+                    <p class="text-lg sm:text-xl text-popCream font-bold max-w-2xl mx-auto lg:mx-0 leading-relaxed drop-shadow-sm">
+                        Speak directly with licensed therapists who specialize in <strong>loss of a loved one</strong>, <strong>substance use recovery</strong>, and <strong>childhood trauma</strong>—from the quiet comfort of your home.
+                    </p>
+
+                    <!-- CTAs -->
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
+                        <button onclick="openWizardModal()" class="w-full sm:w-auto px-8 py-4 bg-popYellow hover:bg-yellow-300 text-popDark font-extrabold rounded-2xl pop-border shadow-pop hover:shadow-pop-lg hover:-translate-y-1 transition-all flex items-center justify-center gap-3 text-lg display-font">
+                            <i data-lucide="sparkles" class="w-6 h-6"></i>
+                            <span>Match With a Specialist</span>
+                        </button>
+
+                        <a href="#specializations" class="w-full sm:w-auto px-7 py-4 bg-popCream hover:bg-white text-popDark font-extrabold rounded-2xl pop-border shadow-pop transition-all flex items-center justify-center gap-2 text-base display-font">
+                            <span>Explore Focus Areas</span>
+                            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+
+                </div>
+
+                <!-- Right Hero: Character Card Stack (Inspired by your reference images) -->
+                <div class="lg:col-span-5 relative">
+                    
+                    <!-- DOODLE PLACEHOLDER: Floating companion doodle hanging off the main card -->
+ 
+
+                    <!-- Card Wrapper with Rotation -->
+                    <div class="relative mx-auto max-w-md lg:max-w-none transform -rotate-2 hover:rotate-0 transition-transform duration-300">
+                        
+                        <!-- Main Character Card -->
+                        <div class="bg-popCream pop-border rounded-3xl p-6 sm:p-8 shadow-pop-lg hover:shadow-[14px_14px_0px_#1E1E24] transition-shadow duration-300 space-y-6 relative z-10">
+                            
+                            <!-- Card Header -->
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-4">
+                                    <!-- Character Avatar Space -->
+                                    <div class="relative">
+                                        <div class="w-16 h-16 rounded-2xl bg-popTeal pop-border flex items-center justify-center overflow-hidden shadow-pop-sm">
+                                            <!-- DOODLE PLACEHOLDER: Therapist/Character Avatar Illustration -->
+                                            <img src="vt.jfif" alt="Rukayyah Character" class="w-full h-full object-cover">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-extrabold text-popDark text-xl display-font">Rukayyah A.</h3>
+                                        <p class="text-xs font-bold text-popDark bg-popYellow px-2.5 py-0.5 rounded-md pop-border-sm inline-block">Licensed Clinical Psychologist</p>
+                                    </div>
+                                </div>
+                                <span class="text-xs bg-popPink text-white font-extrabold px-3 py-1.5 rounded-xl pop-border-sm shadow-pop-sm display-font">Grief & Trauma</span>
+                            </div>
+
+                            <!-- Therapeutic Approach Speech Bubble -->
+                            <div class="bg-white rounded-2xl p-4 pop-border text-xs sm:text-sm text-popDark font-bold space-y-2 relative">
+                                <!-- DOODLE PLACEHOLDER: Speech Bubble Tail Doodle or Icon -->
+                                <p class="leading-relaxed">
+                                    "Grief and recovery require a room where you don't have to carry the weight alone. We integrate structured pathways with deep cultural empathy."
+                                </p>
+                            </div>
+
+                            <!-- Match Compatibility Bar -->
+                            <div class="space-y-2">
+                                <div class="text-xs text-popDark font-extrabold flex justify-between display-font">
+                                    <span>Match Compatibility</span>
+                                    <span class="text-popPink">98% Fit</span>
+                                </div>
+                                <div class="w-full bg-popDark h-4 rounded-full p-0.5 pop-border-sm">
+                                    <div class="bg-popTeal h-full rounded-full" style="width: 98%;"></div>
+                                </div>
+                            </div>
+
+                            <button onclick="openWizardModal()" class="w-full py-4 bg-popPurple hover:bg-purple-600 text-white font-extrabold text-sm sm:text-base rounded-2xl pop-border shadow-pop transition-transform hover:-translate-y-0.5 display-font">
+                                Begin Personal Intake
+                            </button>
+
+                        </div>
+
+                        <!-- Floating Accent Sticker 1 -->
+                        <div class="absolute -bottom-6 -left-6 z-20 bg-popYellow pop-border rounded-2xl p-3 shadow-pop flex items-center gap-3 animate-wiggle">
+                            <div class="w-10 h-10 rounded-xl bg-white pop-border-sm flex items-center justify-center overflow-hidden">
+                                <!-- DOODLE PLACEHOLDER: Heart/Care Sticker Icon -->
+                                <img src="https://i.pinimg.com/736x/c9/fd/88/c9fd88592217f62001787b5c316c54f3.jpg" alt="Heart Doodle" class="w-full h-full object-contain">
+                            </div>
+                            <div>
+                                <p class="text-xs font-extrabold text-popDark display-font">Dedicated Care</p>
+                                <p class="text-[10px] font-bold text-popDark">Loss & Recovery</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Grid / Specialization Section (Collectible Card Style) -->
+    <section id="specializations" class="py-20 bg-popYellow border-t-4 border-b-4 border-popDark relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center space-y-4 mb-16 relative">
+                
+
+                <span class="text-xs uppercase tracking-widest font-extrabold text-popDark bg-popCream px-4 py-1.5 rounded-full pop-border shadow-pop-sm inline-block display-font">Core Focus Areas</span>
+                <h2 class="text-4xl sm:text-5xl font-extrabold text-popDark display-font">
+                    Specialized Pathways for You
+                </h2>
+            </div>
+
+            <!-- Collectible Character-Style Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <!-- Card 1 -->
+                <div class="bg-popCream pop-border rounded-3xl p-5 shadow-pop hover:shadow-pop-lg hover:-translate-y-2 transition-all duration-300 transform -rotate-1 hover:rotate-0 space-y-4 relative overflow-hidden group">
+                    <div class="w-full h-56 bg-popTeal pop-border rounded-2xl flex items-center justify-center relative overflow-hidden">
+                        <!-- DOODLE PLACEHOLDER: Card Illustration 1 -->
+                        <img src="https://i.pinimg.com/1200x/48/a1/13/48a113007f62e9d61fbb93c5d486e767.jpg" alt="Grief Support Doodle" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <h3 class="text-2xl font-extrabold text-popDark display-font">Grief & Loss Care</h3>
+                    <p class="text-sm font-bold text-popDark">Structured, gentle guidance through bereavement, honor, and processing loss.</p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-popCream pop-border rounded-3xl p-5 shadow-pop hover:shadow-pop-lg hover:-translate-y-2 transition-all duration-300 transform rotate-1 hover:rotate-0 space-y-4 relative overflow-hidden group">
+                    <div class="w-full h-56 bg-popPink pop-border rounded-2xl flex items-center justify-center relative overflow-hidden">
+                        <!-- DOODLE PLACEHOLDER: Card Illustration 2 -->
+                        <img src="https://i.pinimg.com/1200x/64/8a/22/648a22e504ea4634e5287cb06c53e64c.jpg" alt="Substance Recovery Doodle" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <h3 class="text-2xl font-extrabold text-popDark display-font">Substance Recovery</h3>
+                    <p class="text-sm font-bold text-popDark">Non-judgmental telehealth space for drug abuse recovery and healing habits.</p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-popCream pop-border rounded-3xl p-5 shadow-pop hover:shadow-pop-lg hover:-translate-y-2 transition-all duration-300 transform -rotate-1 hover:rotate-0 space-y-4 relative overflow-hidden group">
+                    <div class="w-full h-56 bg-popBlue pop-border rounded-2xl flex items-center justify-center relative overflow-hidden">
+                        <!-- DOODLE PLACEHOLDER: Card Illustration 3 -->
+                        <img src="https://i.pinimg.com/736x/94/03/96/940396963854307d70fa24de95069009.jpg" alt="Childhood Trauma Doodle" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <h3 class="text-2xl font-extrabold text-popDark display-font">Childhood Trauma</h3>
+                    <p class="text-sm font-bold text-popDark">Reparenting, healing inner child wounds, and building safety in relationships.</p>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
