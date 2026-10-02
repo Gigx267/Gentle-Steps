@@ -11,7 +11,7 @@
     <!-- Google Fonts: Fredoka & Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -42,22 +42,17 @@
                     },
                     keyframes: {
                         wiggle: {
-                            '0%, 100%': { transform: 'rotate(-4deg)' },
-                            '50%': { transform: 'rotate(4deg)' },
+                            '0%, 100%': { transform: 'rotate(-3deg)' },
+                            '50%': { transform: 'rotate(3deg)' },
                         },
                         float: {
                             '0%, 100%': { transform: 'translateY(0px)' },
-                            '50%': { transform: 'translateY(-12px)' },
+                            '50%': { transform: 'translateY(-10px)' },
                         },
-                        bounceSlow: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-8px)' },
-                        }
                     },
                     animation: {
-                        wiggle: 'wiggle 2.5s ease-in-out infinite',
-                        float: 'float 3.5s ease-in-out infinite',
-                        'bounce-slow': 'bounceSlow 2s ease-in-out infinite',
+                        wiggle: 'wiggle 3s ease-in-out infinite',
+                        float: 'float 4s ease-in-out infinite',
                     }
                 }
             }
@@ -85,18 +80,9 @@
             border: 3px solid #1E1E24;
         }
         ::selection { background: #FFC107; color: #1E1E24; }
-        a, button { -webkit-tap-highlight-color: transparent; }
         a:focus-visible, button:focus-visible {
             outline: 4px solid #7C4DFF;
             outline-offset: 4px;
-        }
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
-                scroll-behavior: auto !important;
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
         }
     </style>
 </head>
@@ -107,38 +93,37 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
                 
-                <!-- Logo with Header Doodle Spot -->
+                <!-- Logo -->
                 <a href="#" class="flex items-center gap-3 group">
                     <div class="relative">
-                        <!-- DOODLE PLACEHOLDER: Logo Icon/Mascot -->
-                        <div class="w-12 h-12 rounded-2xl bg-popPink pop-border flex items-center justify-center shadow-pop group-hover:rotate-6 transition-transform overflow-hidden">
-                            <img src="https://i.pinimg.com/1200x/8d/e5/9d/8de59dfd676d788b5d26a86359838072.jpg " alt="Logo Doodle" class="w-full h-full object-cover hidden" id="logo-doodle">
+                        <div class="w-12 h-12 rounded-2xl bg-popPink pop-border flex items-center justify-center shadow-pop group-hover:rotate-6 transition-transform">
                             <i data-lucide="footprints" class="w-6 h-6 text-white"></i>
                         </div>
-                        <!-- Tiny Accent Doodle Badge -->
                         <div class="absolute -top-2 -right-2 w-6 h-6 bg-popTeal rounded-full pop-border-sm flex items-center justify-center animate-wiggle">
-                            <i data-lucide="sparkle" class="w-3 h-3 text-white"></i>
+                            <i data-lucide="sparkles" class="w-3 h-3 text-white"></i>
                         </div>
                     </div>
                     <div>
-                        <span class="text-2xl font-bold tracking-tight text-popDark block display-font">Gentle Steps</span>
-                        <span class="text-[11px] tracking-wider uppercase text-popDark font-extrabold block -mt-1">Grief & Trauma Care</span>
+                        <span class="text-2xl font-bold tracking-tight text-popDark block display-font leading-none">Gentle Steps</span>
+                        <span class="text-[10px] tracking-wider uppercase text-popDark font-extrabold block mt-1">Grief & Trauma Care</span>
                     </div>
                 </a>
 
                 <!-- Nav Links -->
-                <div class="hidden md:flex items-center space-x-6 text-base font-extrabold text-popDark">
-                    <a href="#specializations" class="hover:bg-popCream px-3 py-1.5 rounded-xl pop-border-sm transition-all shadow-pop-sm">Specializations</a>
-                    <a href="#how-it-works" class="hover:bg-popCream px-3 py-1.5 rounded-xl pop-border-sm transition-all shadow-pop-sm">How It Works</a>
-                    <a href="#therapists" class="hover:bg-popCream px-3 py-1.5 rounded-xl pop-border-sm transition-all shadow-pop-sm">Therapists</a>
-                    <a href="#faq" class="hover:bg-popCream px-3 py-1.5 rounded-xl pop-border-sm transition-all shadow-pop-sm">FAQ</a>
+                <div class="hidden lg:flex items-center space-x-3 text-sm font-extrabold text-popDark">
+                    <a href="#" class="bg-popCream px-3.5 py-2 rounded-xl pop-border-sm shadow-pop-sm hover:translate-y-0.5 transition-transform">Home</a>
+                    <a href="#about" class="hover:bg-popCream px-3.5 py-2 rounded-xl border-2 border-transparent hover:pop-border-sm transition-all">About Us</a>
+                    <a href="#why-us" class="hover:bg-popCream px-3.5 py-2 rounded-xl border-2 border-transparent hover:pop-border-sm transition-all">Why Us</a>
+                    <a href="#specialists" class="hover:bg-popCream px-3.5 py-2 rounded-xl border-2 border-transparent hover:pop-border-sm transition-all">Therapists</a>
+                    <a href="#pricing" class="hover:bg-popCream px-3.5 py-2 rounded-xl border-2 border-transparent hover:pop-border-sm transition-all">Pricing</a>
+                    <a href="#faq" class="hover:bg-popCream px-3.5 py-2 rounded-xl border-2 border-transparent hover:pop-border-sm transition-all">FAQ</a>
                 </div>
 
                 <!-- Action Button -->
-                <div class="hidden md:flex items-center gap-4">
-                    <button onclick="openWizardModal()" class="bg-popTeal hover:bg-teal-300 text-popDark font-extrabold px-6 py-3 rounded-2xl pop-border shadow-pop hover:shadow-pop-lg hover:-translate-y-1 transition-all flex items-center gap-2 display-font">
+                <div class="flex items-center gap-4">
+                    <button onclick="openWizardModal()" class="bg-popTeal hover:bg-teal-300 text-popDark font-extrabold px-5 py-2.5 rounded-2xl pop-border shadow-pop hover:shadow-pop-lg hover:-translate-y-0.5 transition-all flex items-center gap-2 display-font text-sm sm:text-base">
                         <span>Find Your Specialist</span>
-                        <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
                     </button>
                 </div>
 
@@ -147,39 +132,30 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="relative pt-12 pb-24 md:pt-16 md:pb-32 bg-popOrange overflow-hidden">
-        
-        <!-- FLOATING DOODLE BACKGROUND SLOTS (Absolute Positioned Stickers) -->
-       
-
-    
-
+    <section class="relative pt-12 pb-20 md:pt-16 md:pb-28 bg-popOrange overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
                 
                 <!-- Left Hero Content -->
-                <div class="lg:col-span-7 space-y-6 text-center lg:text-left relative">
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
                     
-                    <!-- DOODLE PLACEHOLDER: Text Accent/Arrow Doodle pointing to heading -->
-                  
-
-                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-popYellow pop-border shadow-pop text-popDark font-extrabold text-sm animate-wiggle">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-popYellow pop-border shadow-pop text-popDark font-extrabold text-xs sm:text-sm animate-wiggle">
                         <i data-lucide="heart" class="w-4 h-4 text-popPink fill-popPink"></i>
                         <span>Grief-Focused Telehealth Platform</span>
                     </div>
 
-                    <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-popCream display-font leading-tight tracking-tight drop-shadow-[4px_4px_0px_#1E1E24]">
+                    <h1 class="text-4xl sm:text-6xl lg:text-6xl font-extrabold text-popCream display-font leading-tight tracking-tight drop-shadow-[4px_4px_0px_#1E1E24]">
                         A Safe Space to Heal, Grow, and <span class="bg-popYellow text-popDark px-3 py-1 rounded-2xl pop-border inline-block rotate-1 shadow-pop">Reclaim Peace</span>
                     </h1>
 
-                    <p class="text-lg sm:text-xl text-popCream font-bold max-w-2xl mx-auto lg:mx-0 leading-relaxed drop-shadow-sm">
-                        Speak directly with licensed therapists who specialize in <strong>loss of a loved one</strong>, <strong>substance use recovery</strong>, and <strong>childhood trauma</strong>—from the quiet comfort of your home.
+                    <p class="text-base sm:text-xl text-popCream font-extrabold max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                        Speak directly with licensed therapists specializing in <strong class="underline decoration-popYellow">loss of a loved one</strong>, <strong class="underline decoration-popYellow">substance recovery</strong>, and <strong class="underline decoration-popYellow">childhood trauma</strong>—from the comfort of your home.
                     </p>
 
                     <!-- CTAs -->
-                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
                         <button onclick="openWizardModal()" class="w-full sm:w-auto px-8 py-4 bg-popYellow hover:bg-yellow-300 text-popDark font-extrabold rounded-2xl pop-border shadow-pop hover:shadow-pop-lg hover:-translate-y-1 transition-all flex items-center justify-center gap-3 text-lg display-font">
-                            <i data-lucide="sparkles" class="w-6 h-6"></i>
+                            <i data-lucide="sparkles" class="w-5 h-5"></i>
                             <span>Match With a Specialist</span>
                         </button>
 
@@ -189,43 +165,43 @@
                         </a>
                     </div>
 
+                    <!-- Trust Avatars Row -->
+                    <div class="flex items-center justify-center lg:justify-start gap-3 pt-4">
+                        <div class="flex -space-x-3">
+                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="Client Avatar" class="w-10 h-10 rounded-full pop-border-sm object-cover bg-popCream">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80" alt="Client Avatar" class="w-10 h-10 rounded-full pop-border-sm object-cover bg-popCream">
+                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=80" alt="Client Avatar" class="w-10 h-10 rounded-full pop-border-sm object-cover bg-popCream">
+                            <div class="w-10 h-10 rounded-full pop-border-sm bg-popPurple text-white font-extrabold text-xs flex items-center justify-center shadow-pop-sm">+2k</div>
+                        </div>
+                        <p class="text-xs sm:text-sm font-extrabold text-popCream drop-shadow">2,400+ sessions delivered with care</p>
+                    </div>
+
                 </div>
 
-                <!-- Right Hero: Character Card Stack (Inspired by your reference images) -->
+                <!-- Right Hero: Character Card Stack -->
                 <div class="lg:col-span-5 relative">
-                    
-                    <!-- DOODLE PLACEHOLDER: Floating companion doodle hanging off the main card -->
- 
-
-                    <!-- Card Wrapper with Rotation -->
-                    <div class="relative mx-auto max-w-md lg:max-w-none transform -rotate-2 hover:rotate-0 transition-transform duration-300">
+                    <div class="relative mx-auto max-w-md lg:max-w-none transform -rotate-1 hover:rotate-0 transition-transform duration-300">
                         
                         <!-- Main Character Card -->
-                        <div class="bg-popCream pop-border rounded-3xl p-6 sm:p-8 shadow-pop-lg hover:shadow-[14px_14px_0px_#1E1E24] transition-shadow duration-300 space-y-6 relative z-10">
+                        <div class="bg-popCream pop-border rounded-3xl p-6 sm:p-8 shadow-pop-lg space-y-6 relative z-10">
                             
                             <!-- Card Header -->
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center gap-4">
-                                    <!-- Character Avatar Space -->
-                                    <div class="relative">
-                                        <div class="w-16 h-16 rounded-2xl bg-popTeal pop-border flex items-center justify-center overflow-hidden shadow-pop-sm">
-                                            <!-- DOODLE PLACEHOLDER: Therapist/Character Avatar Illustration -->
-                                            <img src="vt.jfif" alt="Rukayyah Character" class="w-full h-full object-cover">
-                                        </div>
+                                    <div class="w-16 h-16 rounded-2xl bg-popTeal pop-border flex items-center justify-center overflow-hidden shadow-pop-sm">
+                                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=300&auto=format&fit=crop&q=80" alt="Therapist Rukayyah" class="w-full h-full object-cover">
                                     </div>
                                     <div>
                                         <h3 class="font-extrabold text-popDark text-xl display-font">Rukayyah A.</h3>
-                                        <p class="text-xs font-bold text-popDark bg-popYellow px-2.5 py-0.5 rounded-md pop-border-sm inline-block">Licensed Clinical Psychologist</p>
+                                        <p class="text-xs font-bold text-popDark bg-popYellow px-2 py-0.5 rounded-md pop-border-sm inline-block">Licensed Clinical Psychologist</p>
                                     </div>
                                 </div>
-                                <span class="text-xs bg-popPink text-white font-extrabold px-3 py-1.5 rounded-xl pop-border-sm shadow-pop-sm display-font">Grief & Trauma</span>
                             </div>
 
                             <!-- Therapeutic Approach Speech Bubble -->
                             <div class="bg-white rounded-2xl p-4 pop-border text-xs sm:text-sm text-popDark font-bold space-y-2 relative">
-                                <!-- DOODLE PLACEHOLDER: Speech Bubble Tail Doodle or Icon -->
                                 <p class="leading-relaxed">
-                                    "Grief and recovery require a room where you don't have to carry the weight alone. We integrate structured pathways with deep cultural empathy."
+                                    "Grief and recovery require a room where you don't have to carry the weight alone. We integrate structured pathways with deep empathy."
                                 </p>
                             </div>
 
@@ -240,21 +216,20 @@
                                 </div>
                             </div>
 
-                            <button onclick="openWizardModal()" class="w-full py-4 bg-popPurple hover:bg-purple-600 text-white font-extrabold text-sm sm:text-base rounded-2xl pop-border shadow-pop transition-transform hover:-translate-y-0.5 display-font">
+                            <button onclick="openWizardModal()" class="w-full py-3.5 bg-popPurple hover:bg-purple-600 text-white font-extrabold text-sm sm:text-base rounded-2xl pop-border shadow-pop transition-transform hover:-translate-y-0.5 display-font">
                                 Begin Personal Intake
                             </button>
 
                         </div>
 
-                        <!-- Floating Accent Sticker 1 -->
-                        <div class="absolute -bottom-6 -left-6 z-20 bg-popYellow pop-border rounded-2xl p-3 shadow-pop flex items-center gap-3 animate-wiggle">
-                            <div class="w-10 h-10 rounded-xl bg-white pop-border-sm flex items-center justify-center overflow-hidden">
-                                <!-- DOODLE PLACEHOLDER: Heart/Care Sticker Icon -->
-                                <img src="https://i.pinimg.com/736x/c9/fd/88/c9fd88592217f62001787b5c316c54f3.jpg" alt="Heart Doodle" class="w-full h-full object-contain">
+                        <!-- Floating Accent Sticker -->
+                        <div class="absolute -bottom-5 -left-5 z-20 bg-popYellow pop-border rounded-2xl p-3 shadow-pop flex items-center gap-3 animate-float">
+                            <div class="w-10 h-10 rounded-xl bg-popPink pop-border-sm flex items-center justify-center text-white">
+                                <i data-lucide="shield-heart" class="w-6 h-6"></i>
                             </div>
                             <div>
                                 <p class="text-xs font-extrabold text-popDark display-font">Dedicated Care</p>
-                                <p class="text-[10px] font-bold text-popDark">Loss & Recovery</p>
+                                <p class="text-[10px] font-extrabold text-popDark">Loss & Recovery</p>
                             </div>
                         </div>
 
@@ -265,50 +240,44 @@
         </div>
     </section>
 
-    <!-- Interactive Grid / Specialization Section (Collectible Card Style) -->
+    <!-- Specialization Section -->
     <section id="specializations" class="py-20 bg-popYellow border-t-4 border-b-4 border-popDark relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
-            <div class="text-center space-y-4 mb-16 relative">
-                
-
+            <div class="text-center space-y-3 mb-16 relative">
                 <span class="text-xs uppercase tracking-widest font-extrabold text-popDark bg-popCream px-4 py-1.5 rounded-full pop-border shadow-pop-sm inline-block display-font">Core Focus Areas</span>
-                <h2 class="text-4xl sm:text-5xl font-extrabold text-popDark display-font">
+                <h2 class="text-3xl sm:text-5xl font-extrabold text-popDark display-font">
                     Specialized Pathways for You
                 </h2>
             </div>
 
-            <!-- Collectible Character-Style Cards Grid -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 
                 <!-- Card 1 -->
-                <div class="bg-popCream pop-border rounded-3xl p-5 shadow-pop hover:shadow-pop-lg hover:-translate-y-2 transition-all duration-300 transform -rotate-1 hover:rotate-0 space-y-4 relative overflow-hidden group">
-                    <div class="w-full h-56 bg-popTeal pop-border rounded-2xl flex items-center justify-center relative overflow-hidden">
-                        <!-- DOODLE PLACEHOLDER: Card Illustration 1 -->
-                        <img src="https://i.pinimg.com/1200x/48/a1/13/48a113007f62e9d61fbb93c5d486e767.jpg" alt="Grief Support Doodle" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                <div class="bg-popCream pop-border rounded-3xl p-5 shadow-pop hover:shadow-pop-lg hover:-translate-y-2 transition-all duration-300 transform -rotate-1 hover:rotate-0 space-y-4 group">
+                    <div class="w-full h-52 bg-popTeal pop-border rounded-2xl overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=600&auto=format&fit=crop&q=80" alt="Grief Support" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     </div>
                     <h3 class="text-2xl font-extrabold text-popDark display-font">Grief & Loss Care</h3>
-                    <p class="text-sm font-bold text-popDark">Structured, gentle guidance through bereavement, honor, and processing loss.</p>
+                    <p class="text-sm font-bold text-popDark/90 leading-relaxed">Structured, gentle guidance through bereavement, honoring your timeline and processing loss.</p>
                 </div>
 
                 <!-- Card 2 -->
-                <div class="bg-popCream pop-border rounded-3xl p-5 shadow-pop hover:shadow-pop-lg hover:-translate-y-2 transition-all duration-300 transform rotate-1 hover:rotate-0 space-y-4 relative overflow-hidden group">
-                    <div class="w-full h-56 bg-popPink pop-border rounded-2xl flex items-center justify-center relative overflow-hidden">
-                        <!-- DOODLE PLACEHOLDER: Card Illustration 2 -->
-                        <img src="https://i.pinimg.com/1200x/64/8a/22/648a22e504ea4634e5287cb06c53e64c.jpg" alt="Substance Recovery Doodle" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                <div class="bg-popCream pop-border rounded-3xl p-5 shadow-pop hover:shadow-pop-lg hover:-translate-y-2 transition-all duration-300 transform rotate-1 hover:rotate-0 space-y-4 group">
+                    <div class="w-full h-52 bg-popPink pop-border rounded-2xl overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600&auto=format&fit=crop&q=80" alt="Substance Recovery" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     </div>
                     <h3 class="text-2xl font-extrabold text-popDark display-font">Substance Recovery</h3>
-                    <p class="text-sm font-bold text-popDark">Non-judgmental telehealth space for drug abuse recovery and healing habits.</p>
+                    <p class="text-sm font-bold text-popDark/90 leading-relaxed">A non-judgmental telehealth space supporting substance recovery and sustainable daily habits.</p>
                 </div>
 
                 <!-- Card 3 -->
-                <div class="bg-popCream pop-border rounded-3xl p-5 shadow-pop hover:shadow-pop-lg hover:-translate-y-2 transition-all duration-300 transform -rotate-1 hover:rotate-0 space-y-4 relative overflow-hidden group">
-                    <div class="w-full h-56 bg-popBlue pop-border rounded-2xl flex items-center justify-center relative overflow-hidden">
-                        <!-- DOODLE PLACEHOLDER: Card Illustration 3 -->
-                        <img src="https://i.pinimg.com/736x/94/03/96/940396963854307d70fa24de95069009.jpg" alt="Childhood Trauma Doodle" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                <div class="bg-popCream pop-border rounded-3xl p-5 shadow-pop hover:shadow-pop-lg hover:-translate-y-2 transition-all duration-300 transform -rotate-1 hover:rotate-0 space-y-4 group">
+                    <div class="w-full h-52 bg-popBlue pop-border rounded-2xl overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=600&auto=format&fit=crop&q=80" alt="Childhood Trauma" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     </div>
                     <h3 class="text-2xl font-extrabold text-popDark display-font">Childhood Trauma</h3>
-                    <p class="text-sm font-bold text-popDark">Reparenting, healing inner child wounds, and building safety in relationships.</p>
+                    <p class="text-sm font-bold text-popDark/90 leading-relaxed">Reparenting work, healing inner child wounds, and cultivating felt safety in relationships.</p>
                 </div>
 
             </div>
@@ -316,8 +285,207 @@
         </div>
     </section>
 
+    <!-- Why Gentle Steps Section -->
+    <section id="why-us" class="py-20 bg-popTeal border-b-4 border-popDark relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
+            <div class="text-center space-y-4 mb-16 max-w-3xl mx-auto">
+                <span class="text-xs uppercase tracking-widest font-extrabold text-popDark bg-popYellow px-4 py-1.5 rounded-full pop-border shadow-pop-sm inline-block display-font">
+                    The Gentle Steps Promise
+                </span>
+                <h2 class="text-3xl sm:text-5xl font-extrabold text-popCream display-font drop-shadow-[3px_3px_0px_#1E1E24]">
+                    Professional. Affordable. Convenient. Effective.
+                </h2>
+                <p class="text-base sm:text-lg font-bold text-popDark bg-popCream pop-border rounded-2xl p-4 shadow-pop leading-relaxed">
+                    Real licensed care, transparent pricing, sessions that fit your life, and evidence-backed approaches—all in one calm, supportive space.
+                </p>
+            </div>
+
+            <!-- 4 Pillar Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+
+                <!-- Pillar 1 -->
+                <article class="bg-popCream pop-border rounded-3xl overflow-hidden shadow-pop hover:shadow-pop-lg hover:-translate-y-2 transition-all duration-300 transform -rotate-1 hover:rotate-0 group flex flex-col justify-between">
+                    <div>
+                        <div class="relative h-44 overflow-hidden border-b-4 border-popDark">
+                            <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=500&auto=format&fit=crop&q=80" alt="Licensed Therapist" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute top-3 left-3 w-10 h-10 rounded-xl bg-popPurple pop-border-sm shadow-pop-sm flex items-center justify-center">
+                                <i data-lucide="shield-check" class="w-5 h-5 text-white"></i>
+                            </div>
+                        </div>
+                        <div class="p-5 space-y-3">
+                            <h3 class="text-xl font-extrabold text-popDark display-font">Professional</h3>
+                            <p class="text-xs font-bold text-popDark/80 leading-relaxed">
+                                Fully credentialed clinicians with specialized experience. No unverified wellness coaches.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="px-5 pb-5">
+                        <ul class="space-y-1.5 text-xs font-extrabold text-popDark border-t-2 border-popDark/10 pt-3">
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-popTeal stroke-[3]"></i> Verified Credentials</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-popTeal stroke-[3]"></i> Clinical Supervision</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- Pillar 2 -->
+                <article class="bg-popCream pop-border rounded-3xl overflow-hidden shadow-pop hover:shadow-pop-lg hover:-translate-y-2 transition-all duration-300 transform rotate-1 hover:rotate-0 group flex flex-col justify-between">
+                    <div>
+                        <div class="relative h-44 overflow-hidden border-b-4 border-popDark">
+                            <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=500&auto=format&fit=crop&q=80" alt="Affordable Care" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute top-3 left-3 w-10 h-10 rounded-xl bg-popYellow pop-border-sm shadow-pop-sm flex items-center justify-center">
+                                <i data-lucide="wallet" class="w-5 h-5 text-popDark"></i>
+                            </div>
+                        </div>
+                        <div class="p-5 space-y-3">
+                            <h3 class="text-xl font-extrabold text-popDark display-font">Affordable</h3>
+                            <p class="text-xs font-bold text-popDark/80 leading-relaxed">
+                                Transparent pricing with sliding-scale slots reserved monthly for those in financial need.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="px-5 pb-5">
+                        <ul class="space-y-1.5 text-xs font-extrabold text-popDark border-t-2 border-popDark/10 pt-3">
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-popTeal stroke-[3]"></i> Clear Upfront Rates</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-popTeal stroke-[3]"></i> Cancel Anytime</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- Pillar 3 -->
+                <article class="bg-popCream pop-border rounded-3xl overflow-hidden shadow-pop hover:shadow-pop-lg hover:-translate-y-2 transition-all duration-300 transform -rotate-1 hover:rotate-0 group flex flex-col justify-between">
+                    <div>
+                        <div class="relative h-44 overflow-hidden border-b-4 border-popDark">
+                            <img src="https://images.unsplash.com/photo-1588196749597-9ff075ee6b5b?w=500&auto=format&fit=crop&q=80" alt="Convenient Therapy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute top-3 left-3 w-10 h-10 rounded-xl bg-popBlue pop-border-sm shadow-pop-sm flex items-center justify-center">
+                                <i data-lucide="video" class="w-5 h-5 text-popDark"></i>
+                            </div>
+                        </div>
+                        <div class="p-5 space-y-3">
+                            <h3 class="text-xl font-extrabold text-popDark display-font">Convenient</h3>
+                            <p class="text-xs font-bold text-popDark/80 leading-relaxed">
+                                Flexible evening and weekend video or chat appointments from the privacy of home.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="px-5 pb-5">
+                        <ul class="space-y-1.5 text-xs font-extrabold text-popDark border-t-2 border-popDark/10 pt-3">
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-popTeal stroke-[3]"></i> Encrypted Video & Chat</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-popTeal stroke-[3]"></i> Easy Rescheduling</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- Pillar 4 -->
+                <article class="bg-popCream pop-border rounded-3xl overflow-hidden shadow-pop hover:shadow-pop-lg hover:-translate-y-2 transition-all duration-300 transform rotate-1 hover:rotate-0 group flex flex-col justify-between">
+                    <div>
+                        <div class="relative h-44 overflow-hidden border-b-4 border-popDark">
+                            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=500&auto=format&fit=crop&q=80" alt="Effective Results" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute top-3 left-3 w-10 h-10 rounded-xl bg-popPink pop-border-sm shadow-pop-sm flex items-center justify-center">
+                                <i data-lucide="trending-up" class="w-5 h-5 text-white"></i>
+                            </div>
+                        </div>
+                        <div class="p-5 space-y-3">
+                            <h3 class="text-xl font-extrabold text-popDark display-font">Effective</h3>
+                            <p class="text-xs font-bold text-popDark/80 leading-relaxed">
+                                Grounded in evidence-based methods (CBT, trauma-informed care) with measurable milestones.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="px-5 pb-5">
+                        <ul class="space-y-1.5 text-xs font-extrabold text-popDark border-t-2 border-popDark/10 pt-3">
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-popTeal stroke-[3]"></i> Goal Tracking</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-popTeal stroke-[3]"></i> 92% Positive Outcomes</li>
+                        </ul>
+                    </div>
+                </article>
+
+            </div>
+
+            <!-- Stats Band -->
+            <div class="mt-16 bg-popDark pop-border rounded-3xl p-8 shadow-pop-lg grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+                <div>
+                    <p class="text-3xl sm:text-4xl font-extrabold text-popYellow display-font">120+</p>
+                    <p class="text-xs font-extrabold text-popCream uppercase tracking-wider mt-1">Licensed Specialists</p>
+                </div>
+                <div>
+                    <p class="text-3xl sm:text-4xl font-extrabold text-popTeal display-font">2,400+</p>
+                    <p class="text-xs font-extrabold text-popCream uppercase tracking-wider mt-1">Care Sessions</p>
+                </div>
+                <div>
+                    <p class="text-3xl sm:text-4xl font-extrabold text-popPink display-font">4.9<span class="text-lg">/5</span></p>
+                    <p class="text-xs font-extrabold text-popCream uppercase tracking-wider mt-1">Client Rating</p>
+                </div>
+                <div>
+                    <p class="text-3xl sm:text-4xl font-extrabold text-popBlue display-font">18</p>
+                    <p class="text-xs font-extrabold text-popCream uppercase tracking-wider mt-1">Countries Served</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-popDark text-popCream py-12 border-t-4 border-popDark">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-popYellow pop-border-sm flex items-center justify-center text-popDark font-bold">
+                    <i data-lucide="footprints" class="w-5 h-5"></i>
+                </div>
+                <span class="text-xl font-bold display-font">Gentle Steps</span>
+            </div>
+            <p class="text-xs text-popCream/70 font-bold">© 2026 Gentle Steps Telehealth. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Interactive Match Wizard Modal -->
+    <div id="wizard-modal" class="fixed inset-0 z-50 bg-popDark/80 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-popCream pop-border rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-pop-lg relative space-y-6">
+            <button onclick="closeWizardModal()" class="absolute top-4 right-4 w-9 h-9 bg-popYellow rounded-xl pop-border-sm flex items-center justify-center hover:bg-red-400 transition-colors">
+                <i data-lucide="x" class="w-5 h-5 text-popDark"></i>
+            </button>
+
+            <div class="space-y-2">
+                <span class="text-xs uppercase tracking-widest font-extrabold text-popDark bg-popYellow px-3 py-1 rounded-full pop-border-sm inline-block display-font">Quick Intake</span>
+                <h3 class="text-2xl font-extrabold text-popDark display-font">Find Your Specialty Fit</h3>
+            </div>
+
+            <form onsubmit="event.preventDefault(); alert('Match requested! We will reach out shortly.'); closeWizardModal();" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-extrabold text-popDark uppercase tracking-wider mb-2">What area would you like to focus on?</label>
+                    <select class="w-full bg-white pop-border rounded-2xl p-3 text-sm font-bold text-popDark focus:outline-none">
+                        <option>Grief & Loss Care</option>
+                        <option>Substance Recovery</option>
+                        <option>Childhood Trauma & Reparenting</option>
+                        <option>General Anxiety & Life Transitions</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-extrabold text-popDark uppercase tracking-wider mb-2">Your Email</label>
+                    <input type="email" required placeholder="name@example.com" class="w-full bg-white pop-border rounded-2xl p-3 text-sm font-bold text-popDark focus:outline-none">
+                </div>
+                <button type="submit" class="w-full py-4 bg-popTeal hover:bg-teal-300 text-popDark font-extrabold text-base rounded-2xl pop-border shadow-pop transition-transform hover:-translate-y-0.5 display-font">
+                    Connect With a Specialist
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Script Init -->
     <script>
         lucide.createIcons();
+
+        function openWizardModal() {
+            const modal = document.getElementById('wizard-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeWizardModal() {
+            const modal = document.getElementById('wizard-modal');
+            modal.classList.remove('flex');
+            modal.classList.add('hidden');
+        }
     </script>
 </body>
 </html>
