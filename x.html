@@ -1,226 +1,707 @@
-<!-- ================================================================= -->
-<!-- GENTLE STEPS: INTELLIGENT CLINICAL MATCHING & BOOKING MODAL       -->
-<!-- ================================================================= -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gentle Steps — Specialized Remote Mental Health Care</title>
 
-<div id="booking-modal" class="booking-shell fixed inset-0 z-50 bg-popDark/80 backdrop-blur-sm items-center justify-center p-4 sm:p-6 overflow-y-auto">
-    <div class="bg-popCream pop-border rounded-3xl w-full max-w-2xl shadow-pop-lg overflow-hidden flex flex-col my-auto max-h-[90vh]">
-        
-        <!-- Modal Header with Progress Bar -->
-        <div class="bg-popYellow p-6 border-b-4 border-popDark flex items-center justify-between shrink-0">
-            <div>
-                <span class="text-xs font-extrabold uppercase tracking-widest text-popDark bg-popPink text-white px-2.5 py-1 rounded-lg pop-border-sm display-font">Secure Intake</span>
-                <h3 class="text-2xl font-extrabold text-popDark display-font mt-2" id="modal-title">Find Your Aligned Therapist</h3>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Space+Grotesk:wght@700;800&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        popYellow: '#FFC107',
+                        popPink: '#FF4081',
+                        popTeal: '#00E676',
+                        popPurple: '#7C4DFF',
+                        popDark: '#1E1E24',
+                        popCream: '#FFFBEA',
+                    },
+                    boxShadow: {
+                        'pop-sm': '3px 3px 0px #1E1E24',
+                        'pop': '5px 5px 0px #1E1E24',
+                        'pop-lg': '8px 8px 0px #1E1E24',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* --- Base Typography --- */
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #FFFBEA;
+            color: #1E1E24;
+        }
+
+        .display-font {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        /* --- Neo-Brutalist Border Helpers --- */
+        .pop-border {
+            border: 3px solid #1E1E24;
+        }
+
+        .pop-border-sm {
+            border: 2px solid #1E1E24;
+        }
+
+        /* --- Dynamic Modal Visibility & Backdrop --- */
+        .booking-shell {
+            display: none;
+            opacity: 0;
+            transition: opacity 250ms ease-in-out;
+        }
+
+        .booking-shell.is-open {
+            display: flex;
+            opacity: 1;
+        }
+
+        /* --- Entrance & Step Animations --- */
+        @keyframes modalSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.97);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .booking-shell.is-open > div {
+            animation: modalSlideUp 250ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes stepFadeIn {
+            from {
+                opacity: 0;
+                transform: translateX(8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .booking-step:not(.hidden) {
+            animation: stepFadeIn 200ms ease-out forwards;
+        }
+
+        /* --- Interactive Choice Cards & Radio Chips --- */
+        .choice-card {
+            position: relative;
+            transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease, background-color 160ms ease;
+            user-select: none;
+        }
+
+        .choice-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 4px 4px 0px #1E1E24;
+        }
+
+        .choice-card:has(input[type="radio"]:checked) {
+            border-color: #7C4DFF !important;
+            background-color: #FFFBEA !important;
+            box-shadow: 6px 6px 0px #7C4DFF !important;
+            transform: translateY(-2px);
+        }
+
+        /* Custom Chip Options (Language & Formats) */
+        .chip {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 140ms ease, background-color 140ms ease, color 140ms ease, border-color 140ms ease;
+            user-select: none;
+        }
+
+        .chip:hover {
+            transform: translateY(-2px);
+            background-color: #FFC107;
+        }
+
+        .chip:has(input[type="radio"]:checked) {
+            background-color: #1E1E24 !important;
+            color: #FFFBEA !important;
+            border-color: #1E1E24 !important;
+            box-shadow: 3px 3px 0px #7C4DFF !important;
+        }
+
+        /* --- Form Fields & Focus States --- */
+        textarea#client-narrative,
+        input#client-name,
+        input#client-email,
+        input#client-phone,
+        select#pricing-tier-select {
+            transition: border-color 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
+        }
+
+        textarea#client-narrative:focus,
+        input#client-name:focus,
+        input#client-email:focus,
+        input#client-phone:focus,
+        select#pricing-tier-select:focus {
+            border-color: #7C4DFF !important;
+            box-shadow: 4px 4px 0px #1E1E24 !important;
+            background-color: #FFFFFF !important;
+        }
+
+        /* Custom Dropdown Arrow Styling */
+        select#pricing-tier-select {
+            appearance: none;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%231E1E24' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><path d='m6 9 6 6 6-6'/></svg>");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1.25rem;
+            padding-right: 2.75rem;
+        }
+
+        /* --- Step Progress Bar Smooth Fill --- */
+        .progress-fill {
+            transition: width 350ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* --- Spinner for Submission Loading State --- */
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #FFFFFF;
+            border-radius: 50%;
+            animation: spin 700ms linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* --- Reduced Motion Accessibility Override --- */
+        @media (prefers-reduced-motion: reduce) {
+            .booking-shell,
+            .booking-shell.is-open > div,
+            .booking-step:not(.hidden),
+            .choice-card,
+            .chip,
+            .progress-fill,
+            .spinner {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between antialiased">
+
+    <!-- Header Navigation -->
+    <header class="w-full bg-white pop-border-b border-popDark py-4 px-6 sm:px-12 flex items-center justify-between sticky top-0 z-40">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-popPink pop-border-sm rounded-xl flex items-center justify-center text-white font-extrabold text-xl shadow-pop-sm">
+                GS
             </div>
-            <button onclick="closeBooking()" class="w-12 h-12 bg-white pop-border-sm rounded-2xl flex items-center justify-center hover:bg-popPink hover:text-white transition-colors shadow-pop-sm" aria-label="Close booking modal">
-                <i data-lucide="x" class="w-6 h-6"></i>
-            </button>
+            <span class="text-xl sm:text-2xl font-extrabold text-popDark display-font tracking-tight">Gentle Steps</span>
         </div>
+        <button onclick="openBooking()" class="px-5 py-2.5 bg-popYellow hover:bg-yellow-400 text-popDark font-extrabold text-xs sm:text-sm rounded-xl pop-border-sm shadow-pop-sm transition-transform active:translate-y-0.5 display-font">
+            Book a Session
+        </button>
+    </header>
 
-        <!-- Progress Indicator -->
-        <div class="bg-popDark px-6 py-2.5 flex items-center justify-between text-xs font-extrabold text-popCream shrink-0">
-            <span id="step-indicator">Step 1 of 4: Your Narrative</span>
-            <span id="step-percent">25% Complete</span>
-        </div>
-        <div class="w-full bg-gray-200 h-1.5 shrink-0">
-            <div id="progress-bar" class="bg-popTeal h-full progress-fill" style="width: 25%;"></div>
-        </div>
-
-        <!-- Modal Body Form (Formspree Endpoint) -->
-        <form id="gentle-steps-booking-form" action="https://formspree.io/f/your-form-id" method="POST" class="p-6 sm:p-8 overflow-y-auto space-y-6 flex-1">
+    <!-- Main Hero Landing Content -->
+    <main class="flex-1 flex items-center justify-center p-6 sm:p-12">
+        <div class="max-w-4xl w-full text-center space-y-8">
+            <div class="inline-block bg-popTeal px-4 py-1.5 rounded-xl pop-border-sm font-extrabold text-xs uppercase tracking-widest text-popDark shadow-pop-sm">
+                NDPA 2023 Compliant • Culturally Aligned Mental Care
+            </div>
             
-            <!-- Hidden Fields for Clinical Matcher Data -->
-            <input type="hidden" name="assigned_therapist" id="hidden-therapist" value="">
-            <input type="hidden" name="match_score" id="hidden-score" value="">
-            <input type="hidden" name="fee_tier" id="hidden-fee" value="₦15,000">
+            <h1 class="text-4xl sm:text-6xl font-extrabold text-popDark leading-tight display-font">
+                Therapy rooted in empathy, matching your exact voice.
+            </h1>
 
-            <!-- ================= STEP 1: NARRATIVE & PRIMARY CONCERN ================= -->
-            <div class="booking-step space-y-4" data-step="1">
-                <div class="booking-step-heading space-y-1">
-                    <h4 class="text-xl font-extrabold text-popDark display-font">What brings you to Gentle Steps today?</h4>
-                    <p class="text-xs sm:text-sm font-bold text-gray-700">In your own words, describe what you've been carrying or experiencing lately. Don't worry about formatting—just let it flow.</p>
-                </div>
+            <p class="text-lg sm:text-xl font-bold text-gray-700 max-w-2xl mx-auto">
+                Connect with licensed clinical specialists who understand your lived experiences, language nuances, and personal journey.
+            </p>
 
-                <div class="space-y-3">
-                    <label class="block text-xs font-extrabold text-popDark uppercase tracking-wider">Select your primary focus area:</label>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <label class="choice-card p-4 rounded-2xl pop-border bg-white cursor-pointer flex items-center gap-3">
-                            <input type="radio" name="primary_focus" value="Grief & Loss" class="w-4 h-4 text-popPink accent-popPink" required>
-                            <div>
-                                <span class="block font-extrabold text-sm text-popDark display-font">Grief & Loss</span>
-                                <span class="text-xs text-gray-600 font-bold">Bereavement, sudden loss, mourning</span>
-                            </div>
-                        </label>
-                        <label class="choice-card p-4 rounded-2xl pop-border bg-white cursor-pointer flex items-center gap-3">
-                            <input type="radio" name="primary_focus" value="Substance Recovery" class="w-4 h-4 text-popPink accent-popPink">
-                            <div>
-                                <span class="block font-extrabold text-sm text-popDark display-font">Substance Recovery</span>
-                                <span class="text-xs text-gray-600 font-bold">Addiction, chemical dependency, sobriety</span>
-                            </div>
-                        </label>
-                        <label class="choice-card p-4 rounded-2xl pop-border bg-white cursor-pointer flex items-center gap-3">
-                            <input type="radio" name="primary_focus" value="Childhood Trauma & PTSD" class="w-4 h-4 text-popPink accent-popPink">
-                            <div>
-                                <span class="block font-extrabold text-sm text-popDark display-font">Childhood Trauma & PTSD</span>
-                                <span class="text-xs text-gray-600 font-bold">Unresolved past events, nervous system regulation</span>
-                            </div>
-                        </label>
-                        <label class="choice-card p-4 rounded-2xl pop-border bg-white cursor-pointer flex items-center gap-3">
-                            <input type="radio" name="primary_focus" value="Family & Couples Dynamics" class="w-4 h-4 text-popPink accent-popPink">
-                            <div>
-                                <span class="block font-extrabold text-sm text-popDark display-font">Family & Couples</span>
-                                <span class="text-xs text-gray-600 font-bold">Relationship strain, parenting, household conflict</span>
-                            </div>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="space-y-2">
-                    <label for="client-narrative" class="block text-xs font-extrabold text-popDark uppercase tracking-wider">Your Story (Optional but helps us match better):</label>
-                    <textarea id="client-narrative" name="client_narrative" rows="4" placeholder="Share as much or as little as feels safe. How has this been affecting your sleep, work, or peace of mind?" class="w-full p-4 rounded-2xl pop-border bg-white text-sm font-bold text-popDark focus:outline-none focus:ring-4 focus:ring-popPurple resize-none"></textarea>
-                </div>
-            </div>
-
-            <!-- ================= STEP 2: LANGUAGE & ACCESSIBILITY ================= -->
-            <div class="booking-step space-y-4 hidden" data-step="2">
-                <div class="booking-step-heading space-y-1">
-                    <h4 class="text-xl font-extrabold text-popDark display-font">Language & Comfort Preferences</h4>
-                    <p class="text-xs sm:text-sm font-bold text-gray-700">Being able to express what happened to you in the language you think in changes everything.</p>
-                </div>
-
-                <div class="space-y-3">
-                    <label class="block text-xs font-extrabold text-popDark uppercase tracking-wider">Preferred Language for Therapy:</label>
-                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                        <label class="chip p-3 rounded-xl pop-border-sm bg-white text-center cursor-pointer font-extrabold text-xs display-font">
-                            <input type="radio" name="preferred_language" value="English" class="sr-only" checked> English
-                        </label>
-                        <label class="chip p-3 rounded-xl pop-border-sm bg-white text-center cursor-pointer font-extrabold text-xs display-font">
-                            <input type="radio" name="preferred_language" value="Yoruba" class="sr-only"> Yoruba
-                        </label>
-                        <label class="chip p-3 rounded-xl pop-border-sm bg-white text-center cursor-pointer font-extrabold text-xs display-font">
-                            <input type="radio" name="preferred_language" value="Igbo" class="sr-only"> Igbo
-                        </label>
-                        <label class="chip p-3 rounded-xl pop-border-sm bg-white text-center cursor-pointer font-extrabold text-xs display-font">
-                            <input type="radio" name="preferred_language" value="Hausa" class="sr-only"> Hausa
-                        </label>
-                        <label class="chip p-3 rounded-xl pop-border-sm bg-white text-center cursor-pointer font-extrabold text-xs display-font">
-                            <input type="radio" name="preferred_language" value="Nigerian Pidgin" class="sr-only"> Pidgin
-                        </label>
-                        <label class="chip p-3 rounded-xl pop-border-sm bg-white text-center cursor-pointer font-extrabold text-xs display-font">
-                            <input type="radio" name="preferred_language" value="French" class="sr-only"> French
-                        </label>
-                    </div>
-                </div>
-
-                <div class="space-y-3 pt-2">
-                    <label class="block text-xs font-extrabold text-popDark uppercase tracking-wider">Session Format & Bandwidth Optimization:</label>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                        <label class="choice-card p-3 rounded-xl pop-border-sm bg-white cursor-pointer">
-                            <input type="radio" name="session_format" value="Secure Chat" class="sr-only">
-                            <span class="block font-extrabold text-xs text-popDark display-font">💬 Secure Chat</span>
-                            <span class="text-[10px] text-gray-600 block mt-1">Ultra low data</span>
-                        </label>
-                        <label class="choice-card p-3 rounded-xl pop-border-sm bg-white cursor-pointer">
-                            <input type="radio" name="session_format" value="Audio Call" class="sr-only">
-                            <span class="block font-extrabold text-xs text-popDark display-font">📞 Audio Call</span>
-                            <span class="text-[10px] text-gray-600 block mt-1">Stable on 3G</span>
-                        </label>
-                        <label class="choice-card p-3 rounded-xl pop-border-sm bg-white cursor-pointer" checked>
-                            <input type="radio" name="session_format" value="Encrypted Video" class="sr-only" checked>
-                            <span class="block font-extrabold text-xs text-popDark display-font">📹 Video Session</span>
-                            <span class="text-[10px] text-gray-600 block mt-1">Standard HD</span>
-                        </label>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ================= STEP 3: AUTOMATED THERAPIST MATCH ================= -->
-            <div class="booking-step space-y-4 hidden" data-step="3">
-                <div class="booking-step-heading space-y-1">
-                    <h4 class="text-xl font-extrabold text-popDark display-font">Your Recommended Specialist</h4>
-                    <p class="text-xs sm:text-sm font-bold text-gray-700">Based on your narrative, language preferences, and clinical needs, our matching algorithm has assigned:</p>
-                </div>
-
-                <!-- Match Card Container -->
-                <div id="match-card-container" class="bg-white pop-border rounded-2xl p-5 space-y-4 shadow-pop-sm">
-                    <div class="flex items-center gap-4">
-                        <div id="match-avatar" class="w-16 h-16 rounded-2xl bg-popTeal pop-border-sm flex items-center justify-center text-white font-extrabold text-xl display-font shrink-0">
-                            KK
-                        </div>
-                        <div>
-                            <div class="flex items-center gap-2">
-                                <h5 id="match-name" class="font-extrabold text-popDark text-lg display-font">Kendra Kpea, M.Ed., M.Sc.</h5>
-                                <span class="bg-popTeal text-popDark text-[10px] font-extrabold px-2 py-0.5 rounded-md pop-border-sm">98% Match</span>
-                            </div>
-                            <p id="match-specialty" class="text-xs font-bold text-gray-700 mt-0.5">Specialized Trauma, Grief & Loss Specialist</p>
-                            <p id="match-bio" class="text-xs text-gray-600 mt-1 italic">"Rooted in evidence-based somatic work and compassionate listening for Nigerian realities."</p>
-                        </div>
-                    </div>
-                    <div class="bg-popCream p-3 rounded-xl pop-border-sm text-xs font-bold text-popDark flex items-center justify-between">
-                        <span>Available for first session:</span>
-                        <span class="bg-popYellow px-2 py-1 rounded-md pop-border-sm display-font">Tomorrow, 10:00 AM WAT</span>
-                    </div>
-                </div>
-
-                <div class="space-y-2">
-                    <label class="block text-xs font-extrabold text-popDark uppercase tracking-wider">Select Investment Tier (Open Door Sliding Scale):</label>
-                    <select id="pricing-tier-select" name="pricing_tier" onchange="updatePricingTier(this)" class="w-full p-3.5 rounded-2xl pop-border bg-white text-sm font-extrabold text-popDark focus:outline-none">
-                        <option value="₦8,000 Standard Audio/Chat">₦8,000 — 50-Min Audio or Chat Session</option>
-                        <option value="₦15,000 Standard Individual" selected>₦15,000 — Standard Individual Video Session</option>
-                        <option value="₦25,000 Senior Trauma Specialist">₦25,000 — Senior Trauma & Recovery Specialist</option>
-                        <option value="₦30,000 Family & Couples">₦30,000 — Family or Couples Session</option>
-                        <option value="₦5,000 Open Door Sliding Scale">₦5,000 — Open Door Sliding Scale (Household under ₦100k/mo)</option>
-                    </select>
-                </div>
-            </div>
-
-            <!-- ================= STEP 4: CONTACT & SECURE SUBMISSION ================= -->
-            <div class="booking-step space-y-4 hidden" data-step="4">
-                <div class="booking-step-heading space-y-1">
-                    <h4 class="text-xl font-extrabold text-popDark display-font">Where should we send your secure link?</h4>
-                    <p class="text-xs sm:text-sm font-bold text-gray-700">All session details and encrypted tokens are protected under NDPA 2023 compliance.</p>
-                </div>
-
-                <div class="space-y-3">
-                    <div>
-                        <label for="client-name" class="block text-xs font-extrabold text-popDark uppercase tracking-wider mb-1">Your Full Name or Pseudonym:</label>
-                        <input type="text" id="client-name" name="client_name" required placeholder="e.g. Adebayo S. or Confidential Client" class="w-full p-3.5 rounded-2xl pop-border bg-white text-sm font-bold text-popDark focus:outline-none focus:ring-4 focus:ring-popPurple">
-                    </div>
-
-                    <div>
-                        <label for="client-email" class="block text-xs font-extrabold text-popDark uppercase tracking-wider mb-1">Email Address:</label>
-                        <input type="email" id="client-email" name="client_email" required placeholder="you@example.com" class="w-full p-3.5 rounded-2xl pop-border bg-white text-sm font-bold text-popDark focus:outline-none focus:ring-4 focus:ring-popPurple">
-                    </div>
-
-                    <div>
-                        <label for="client-phone" class="block text-xs font-extrabold text-popDark uppercase tracking-wider mb-1">WhatsApp or Phone Number (for reminder ping):</label>
-                        <input type="tel" id="client-phone" name="client_phone" required placeholder="+234 800 000 0000" class="w-full p-3.5 rounded-2xl pop-border bg-white text-sm font-bold text-popDark focus:outline-none focus:ring-4 focus:ring-popPurple">
-                    </div>
-                </div>
-
-                <div class="bg-popYellow/40 p-4 rounded-2xl pop-border-sm text-xs font-bold text-popDark flex items-start gap-3">
-                    <i data-lucide="shield-check" class="w-5 h-5 text-popTeal shrink-0 mt-0.5"></i>
-                    <span>Your data is strictly confidential. Therapists never share session content with payers (including corporate sponsors or family members abroad).</span>
-                </div>
-            </div>
-
-            <!-- Form Action Buttons -->
-            <div class="flex items-center justify-between pt-4 border-t-2 border-popDark shrink-0">
-                <button type="button" id="prev-btn" onclick="prevBookingStep()" class="px-5 py-3 bg-white hover:bg-gray-100 text-popDark font-extrabold text-xs sm:text-sm rounded-xl pop-border-sm shadow-pop-sm display-font hidden">
-                    Back
+            <div class="pt-4">
+                <button onclick="openBooking()" class="px-8 py-4 bg-popPink hover:bg-pink-500 text-white font-extrabold text-base sm:text-lg rounded-2xl pop-border shadow-pop transition-transform hover:-translate-y-0.5 active:translate-y-0 display-font inline-flex items-center gap-3">
+                    <span>Find Your Specialist</span>
+                    <i data-lucide="arrow-right" class="w-5 h-5"></i>
                 </button>
-                <div class="ml-auto flex items-center gap-3">
-                    <button type="button" id="next-btn" onclick="nextBookingStep()" class="px-6 py-3.5 bg-popTeal hover:bg-teal-300 text-popDark font-extrabold text-xs sm:text-sm rounded-2xl pop-border shadow-pop display-font flex items-center gap-2">
-                        <span>Next Step</span>
-                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                    </button>
-                    <button type="submit" id="submit-btn" class="px-8 py-3.5 bg-popPink hover:bg-pink-500 text-white font-extrabold text-xs sm:text-sm rounded-2xl pop-border shadow-pop display-font hidden items-center gap-2">
-                        <span>Confirm & Match</span>
-                        <i data-lucide="check" class="w-4 h-4"></i>
-                    </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full bg-popDark text-popCream py-6 px-6 sm:px-12 text-center text-xs font-bold border-t-4 border-popDark">
+        <p>© Gentle Steps Mental Health Infrastructure. All rights reserved. Strictly confidential care.</p>
+    </footer>
+
+    <!-- ================================================================= -->
+    <!-- GENTLE STEPS: INTELLIGENT CLINICAL MATCHING & BOOKING MODAL       -->
+    <!-- ================================================================= -->
+    <div id="booking-modal" class="booking-shell fixed inset-0 z-50 bg-popDark/80 backdrop-blur-sm items-center justify-center p-4 sm:p-6 overflow-y-auto">
+        <div class="bg-popCream pop-border rounded-3xl w-full max-w-2xl shadow-pop-lg overflow-hidden flex flex-col my-auto max-h-[90vh]">
+            
+            <!-- Modal Header with Progress Bar -->
+            <div class="bg-popYellow p-6 border-b-4 border-popDark flex items-center justify-between shrink-0">
+                <div>
+                    <span class="text-xs font-extrabold uppercase tracking-widest text-popDark bg-popPink text-white px-2.5 py-1 rounded-lg pop-border-sm display-font">Secure Intake</span>
+                    <h3 class="text-2xl font-extrabold text-popDark display-font mt-2" id="modal-title">Find Your Aligned Therapist</h3>
                 </div>
+                <button onclick="closeBooking()" class="w-12 h-12 bg-white pop-border-sm rounded-2xl flex items-center justify-center hover:bg-popPink hover:text-white transition-colors shadow-pop-sm" aria-label="Close booking modal">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
             </div>
 
-        </form>
+            <!-- Progress Indicator -->
+            <div class="bg-popDark px-6 py-2.5 flex items-center justify-between text-xs font-extrabold text-popCream shrink-0">
+                <span id="step-indicator">Step 1 of 4: Your Narrative</span>
+                <span id="step-percent">25% Complete</span>
+            </div>
+            <div class="w-full bg-gray-200 h-1.5 shrink-0">
+                <div id="progress-bar" class="bg-popTeal h-full progress-fill" style="width: 25%;"></div>
+            </div>
 
+            <!-- Modal Body Form (Formspree Endpoint) -->
+            <form id="gentle-steps-booking-form" action="https://formspree.io/f/your-form-id" method="POST" class="p-6 sm:p-8 overflow-y-auto space-y-6 flex-1">
+                
+                <!-- Hidden Fields for Clinical Matcher Data -->
+                <input type="hidden" name="assigned_therapist" id="hidden-therapist" value="">
+                <input type="hidden" name="match_score" id="hidden-score" value="">
+                <input type="hidden" name="fee_tier" id="hidden-fee" value="₦15,000">
+
+                <!-- ================= STEP 1: NARRATIVE & PRIMARY CONCERN ================= -->
+                <div class="booking-step space-y-4" data-step="1">
+                    <div class="booking-step-heading space-y-1">
+                        <h4 class="text-xl font-extrabold text-popDark display-font">What brings you to Gentle Steps today?</h4>
+                        <p class="text-xs sm:text-sm font-bold text-gray-700">In your own words, describe what you've been carrying or experiencing lately. Don't worry about formatting—just let it flow.</p>
+                    </div>
+
+                    <div class="space-y-3">
+                        <label class="block text-xs font-extrabold text-popDark uppercase tracking-wider">Select your primary focus area:</label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <label class="choice-card p-4 rounded-2xl pop-border bg-white cursor-pointer flex items-center gap-3">
+                                <input type="radio" name="primary_focus" value="Grief & Loss" class="w-4 h-4 text-popPink accent-popPink" required>
+                                <div>
+                                    <span class="block font-extrabold text-sm text-popDark display-font">Grief & Loss</span>
+                                    <span class="text-xs text-gray-600 font-bold">Bereavement, sudden loss, mourning</span>
+                                </div>
+                            </label>
+                            <label class="choice-card p-4 rounded-2xl pop-border bg-white cursor-pointer flex items-center gap-3">
+                                <input type="radio" name="primary_focus" value="Substance Recovery" class="w-4 h-4 text-popPink accent-popPink">
+                                <div>
+                                    <span class="block font-extrabold text-sm text-popDark display-font">Substance Recovery</span>
+                                    <span class="text-xs text-gray-600 font-bold">Addiction, chemical dependency, sobriety</span>
+                                </div>
+                            </label>
+                            <label class="choice-card p-4 rounded-2xl pop-border bg-white cursor-pointer flex items-center gap-3">
+                                <input type="radio" name="primary_focus" value="Childhood Trauma & PTSD" class="w-4 h-4 text-popPink accent-popPink">
+                                <div>
+                                    <span class="block font-extrabold text-sm text-popDark display-font">Childhood Trauma & PTSD</span>
+                                    <span class="text-xs text-gray-600 font-bold">Unresolved past events, nervous system regulation</span>
+                                </div>
+                            </label>
+                            <label class="choice-card p-4 rounded-2xl pop-border bg-white cursor-pointer flex items-center gap-3">
+                                <input type="radio" name="primary_focus" value="Family & Couples Dynamics" class="w-4 h-4 text-popPink accent-popPink">
+                                <div>
+                                    <span class="block font-extrabold text-sm text-popDark display-font">Family & Couples</span>
+                                    <span class="text-xs text-gray-600 font-bold">Relationship strain, parenting, household conflict</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label for="client-narrative" class="block text-xs font-extrabold text-popDark uppercase tracking-wider">Your Story (Optional but helps us match better):</label>
+                        <textarea id="client-narrative" name="client_narrative" rows="4" placeholder="Share as much or as little as feels safe. How has this been affecting your sleep, work, or peace of mind?" class="w-full p-4 rounded-2xl pop-border bg-white text-sm font-bold text-popDark focus:outline-none focus:ring-4 focus:ring-popPurple resize-none"></textarea>
+                    </div>
+                </div>
+
+                <!-- ================= STEP 2: LANGUAGE & ACCESSIBILITY ================= -->
+                <div class="booking-step space-y-4 hidden" data-step="2">
+                    <div class="booking-step-heading space-y-1">
+                        <h4 class="text-xl font-extrabold text-popDark display-font">Language & Comfort Preferences</h4>
+                        <p class="text-xs sm:text-sm font-bold text-gray-700">Being able to express what happened to you in the language you think in changes everything.</p>
+                    </div>
+
+                    <div class="space-y-3">
+                        <label class="block text-xs font-extrabold text-popDark uppercase tracking-wider">Preferred Language for Therapy:</label>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                            <label class="chip p-3 rounded-xl pop-border-sm bg-white text-center cursor-pointer font-extrabold text-xs display-font">
+                                <input type="radio" name="preferred_language" value="English" class="sr-only" checked> English
+                            </label>
+                            <label class="chip p-3 rounded-xl pop-border-sm bg-white text-center cursor-pointer font-extrabold text-xs display-font">
+                                <input type="radio" name="preferred_language" value="Yoruba" class="sr-only"> Yoruba
+                            </label>
+                            <label class="chip p-3 rounded-xl pop-border-sm bg-white text-center cursor-pointer font-extrabold text-xs display-font">
+                                <input type="radio" name="preferred_language" value="Igbo" class="sr-only"> Igbo
+                            </label>
+                            <label class="chip p-3 rounded-xl pop-border-sm bg-white text-center cursor-pointer font-extrabold text-xs display-font">
+                                <input type="radio" name="preferred_language" value="Hausa" class="sr-only"> Hausa
+                            </label>
+                            <label class="chip p-3 rounded-xl pop-border-sm bg-white text-center cursor-pointer font-extrabold text-xs display-font">
+                                <input type="radio" name="preferred_language" value="Nigerian Pidgin" class="sr-only"> Pidgin
+                            </label>
+                            <label class="chip p-3 rounded-xl pop-border-sm bg-white text-center cursor-pointer font-extrabold text-xs display-font">
+                                <input type="radio" name="preferred_language" value="French" class="sr-only"> French
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3 pt-2">
+                        <label class="block text-xs font-extrabold text-popDark uppercase tracking-wider">Session Format & Bandwidth Optimization:</label>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            <label class="choice-card p-3 rounded-xl pop-border-sm bg-white cursor-pointer">
+                                <input type="radio" name="session_format" value="Secure Chat" class="sr-only">
+                                <span class="block font-extrabold text-xs text-popDark display-font">💬 Secure Chat</span>
+                                <span class="text-[10px] text-gray-600 block mt-1">Ultra low data</span>
+                            </label>
+                            <label class="choice-card p-3 rounded-xl pop-border-sm bg-white cursor-pointer">
+                                <input type="radio" name="session_format" value="Audio Call" class="sr-only">
+                                <span class="block font-extrabold text-xs text-popDark display-font">📞 Audio Call</span>
+                                <span class="text-[10px] text-gray-600 block mt-1">Stable on 3G</span>
+                            </label>
+                            <label class="choice-card p-3 rounded-xl pop-border-sm bg-white cursor-pointer">
+                                <input type="radio" name="session_format" value="Encrypted Video" class="sr-only" checked>
+                                <span class="block font-extrabold text-xs text-popDark display-font">📹 Video Session</span>
+                                <span class="text-[10px] text-gray-600 block mt-1">Standard HD</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ================= STEP 3: AUTOMATED THERAPIST MATCH ================= -->
+                <div class="booking-step space-y-4 hidden" data-step="3">
+                    <div class="booking-step-heading space-y-1">
+                        <h4 class="text-xl font-extrabold text-popDark display-font">Your Recommended Specialist</h4>
+                        <p class="text-xs sm:text-sm font-bold text-gray-700">Based on your narrative, language preferences, and clinical needs, our matching algorithm has assigned:</p>
+                    </div>
+
+                    <!-- Match Card Container -->
+                    <div id="match-card-container" class="bg-white pop-border rounded-2xl p-5 space-y-4 shadow-pop-sm">
+                        <div class="flex items-center gap-4">
+                            <div id="match-avatar" class="w-16 h-16 rounded-2xl bg-popTeal pop-border-sm flex items-center justify-center text-white font-extrabold text-xl display-font shrink-0">
+                                KK
+                            </div>
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <h5 id="match-name" class="font-extrabold text-popDark text-lg display-font">Kendra Kpea, M.Ed., M.Sc.</h5>
+                                    <span id="match-score-badge" class="bg-popTeal text-popDark text-[10px] font-extrabold px-2 py-0.5 rounded-md pop-border-sm">98% Match</span>
+                                </div>
+                                <p id="match-specialty" class="text-xs font-bold text-gray-700 mt-0.5">Specialized Trauma, Grief & Loss Specialist</p>
+                                <p id="match-bio" class="text-xs text-gray-600 mt-1 italic">"Rooted in evidence-based somatic work and compassionate listening for Nigerian realities."</p>
+                            </div>
+                        </div>
+                        <div class="bg-popCream p-3 rounded-xl pop-border-sm text-xs font-bold text-popDark flex items-center justify-between">
+                            <span>Available for first session:</span>
+                            <span class="bg-popYellow px-2 py-1 rounded-md pop-border-sm display-font">Tomorrow, 10:00 AM WAT</span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="block text-xs font-extrabold text-popDark uppercase tracking-wider">Select Investment Tier (Open Door Sliding Scale):</label>
+                        <select id="pricing-tier-select" name="pricing_tier" onchange="updatePricingTier(this)" class="w-full p-3.5 rounded-2xl pop-border bg-white text-sm font-extrabold text-popDark focus:outline-none">
+                            <option value="₦8,000 Standard Audio/Chat">₦8,000 — 50-Min Audio or Chat Session</option>
+                            <option value="₦15,000 Standard Individual" selected>₦15,000 — Standard Individual Video Session</option>
+                            <option value="₦25,000 Senior Trauma Specialist">₦25,000 — Senior Trauma & Recovery Specialist</option>
+                            <option value="₦30,000 Family & Couples">₦30,000 — Family or Couples Session</option>
+                            <option value="₦5,000 Open Door Sliding Scale">₦5,000 — Open Door Sliding Scale (Household under ₦100k/mo)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- ================= STEP 4: CONTACT & SECURE SUBMISSION ================= -->
+                <div class="booking-step space-y-4 hidden" data-step="4">
+                    <div class="booking-step-heading space-y-1">
+                        <h4 class="text-xl font-extrabold text-popDark display-font">Where should we send your secure link?</h4>
+                        <p class="text-xs sm:text-sm font-bold text-gray-700">All session details and encrypted tokens are protected under NDPA 2023 compliance.</p>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div>
+                            <label for="client-name" class="block text-xs font-extrabold text-popDark uppercase tracking-wider mb-1">Your Full Name or Pseudonym:</label>
+                            <input type="text" id="client-name" name="client_name" required placeholder="e.g. Adebayo S. or Confidential Client" class="w-full p-3.5 rounded-2xl pop-border bg-white text-sm font-bold text-popDark focus:outline-none focus:ring-4 focus:ring-popPurple">
+                        </div>
+
+                        <div>
+                            <label for="client-email" class="block text-xs font-extrabold text-popDark uppercase tracking-wider mb-1">Email Address:</label>
+                            <input type="email" id="client-email" name="client_email" required placeholder="you@example.com" class="w-full p-3.5 rounded-2xl pop-border bg-white text-sm font-bold text-popDark focus:outline-none focus:ring-4 focus:ring-popPurple">
+                        </div>
+
+                        <div>
+                            <label for="client-phone" class="block text-xs font-extrabold text-popDark uppercase tracking-wider mb-1">WhatsApp or Phone Number (for reminder ping):</label>
+                            <input type="tel" id="client-phone" name="client_phone" required placeholder="+234 800 000 0000" class="w-full p-3.5 rounded-2xl pop-border bg-white text-sm font-bold text-popDark focus:outline-none focus:ring-4 focus:ring-popPurple">
+                        </div>
+                    </div>
+
+                    <div class="bg-popYellow/40 p-4 rounded-2xl pop-border-sm text-xs font-bold text-popDark flex items-start gap-3">
+                        <i data-lucide="shield-check" class="w-5 h-5 text-popTeal shrink-0 mt-0.5"></i>
+                        <span>Your data is strictly confidential. Therapists never share session content with payers (including corporate sponsors or family members abroad).</span>
+                    </div>
+                </div>
+
+                <!-- Form Action Buttons -->
+                <div class="flex items-center justify-between pt-4 border-t-2 border-popDark shrink-0">
+                    <button type="button" id="prev-btn" onclick="prevBookingStep()" class="px-5 py-3 bg-white hover:bg-gray-100 text-popDark font-extrabold text-xs sm:text-sm rounded-xl pop-border-sm shadow-pop-sm display-font hidden">
+                        Back
+                    </button>
+                    <div class="ml-auto flex items-center gap-3">
+                        <button type="button" id="next-btn" onclick="nextBookingStep()" class="px-6 py-3.5 bg-popTeal hover:bg-teal-300 text-popDark font-extrabold text-xs sm:text-sm rounded-2xl pop-border shadow-pop display-font flex items-center gap-2">
+                            <span>Next Step</span>
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </button>
+                        <button type="submit" id="submit-btn" class="px-8 py-3.5 bg-popPink hover:bg-pink-500 text-white font-extrabold text-xs sm:text-sm rounded-2xl pop-border shadow-pop display-font hidden items-center gap-2">
+                            <span>Confirm & Match</span>
+                            <i data-lucide="check" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
     </div>
-</div>
+
+    <!-- ================================================================= -->
+    <!-- JAVASCRIPT LOGIC ENGINE                                          -->
+    <!-- ================================================================= -->
+    <script>
+        // --- Clinician Roster Data ---
+        const CLINICIAN_ROSTER = {
+            "Grief & Loss": {
+                name: "Kendra Kpea, M.Ed., M.Sc.",
+                initials: "KK",
+                specialty: "Specialized Trauma, Grief & Loss Specialist",
+                bio: '"Rooted in evidence-based somatic work and compassionate listening for Nigerian realities."',
+                bg: "bg-popTeal",
+                score: "98% Match"
+            },
+            "Substance Recovery": {
+                name: "Abbas Rhamotallahi Ejide, PMHNP",
+                initials: "AR",
+                specialty: "Substance Dependency & Behavioral Recovery Specialist",
+                bio: '"Providing empathetic, judgment-free clinical support for addiction and chemical recovery."',
+                bg: "bg-popYellow",
+                score: "96% Match"
+            },
+            "Childhood Trauma & PTSD": {
+                name: "Rosemary Awolade, Clinical Psych.",
+                initials: "RA",
+                specialty: "Somatic Trauma & PTSD Psychotherapist",
+                bio: '"Helping regulate nervous systems and gently processing deep childhood memories."',
+                bg: "bg-popPink",
+                score: "99% Match"
+            },
+            "Family & Couples Dynamics": {
+                name: "Lovelyn A. Onuoha, M.Sc.",
+                initials: "LO",
+                specialty: "Family Systems & Couples Dynamics Counselor",
+                bio: '"Rebuilding healthy boundaries, clear communication, and harmony in households."',
+                bg: "bg-popPurple",
+                score: "97% Match"
+            }
+        };
+
+        let currentStep = 1;
+
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // --- Modal Display Logic ---
+        function openBooking() {
+            const modal = document.getElementById('booking-modal');
+            modal.classList.add('is-open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeBooking() {
+            const modal = document.getElementById('booking-modal');
+            modal.classList.remove('is-open');
+            document.body.style.overflow = '';
+        }
+
+        // Close on ESC key or backdrop click
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeBooking();
+        });
+
+        document.getElementById('booking-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'booking-modal') closeBooking();
+        });
+
+        // --- Multi-Step Navigation & Matching Engine ---
+        function updateStepUI() {
+            const steps = document.querySelectorAll('.booking-step');
+            const indicator = document.getElementById('step-indicator');
+            const percent = document.getElementById('step-percent');
+            const progressBar = document.getElementById('progress-bar');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const submitBtn = document.getElementById('submit-btn');
+
+            const stepLabels = [
+                "Step 1 of 4: Your Narrative",
+                "Step 2 of 4: Preferences",
+                "Step 3 of 4: Recommended Match",
+                "Step 4 of 4: Contact Details"
+            ];
+
+            // Toggle visibility of step contents
+            steps.forEach(step => {
+                const stepNum = parseInt(step.getAttribute('data-step'), 10);
+                if (stepNum === currentStep) {
+                    step.classList.remove('hidden');
+                } else {
+                    step.classList.add('hidden');
+                }
+            });
+
+            // Update Indicators
+            indicator.textContent = stepLabels[currentStep - 1];
+            const pctVal = currentStep * 25;
+            percent.textContent = `${pctVal}% Complete`;
+            progressBar.style.width = `${pctVal}%`;
+
+            // Button visibility controls
+            if (currentStep === 1) {
+                prevBtn.classList.add('hidden');
+            } else {
+                prevBtn.classList.remove('hidden');
+            }
+
+            if (currentStep === 4) {
+                nextBtn.classList.add('hidden');
+                submitBtn.classList.remove('hidden');
+                submitBtn.classList.add('flex');
+            } else {
+                nextBtn.classList.remove('hidden');
+                submitBtn.classList.add('hidden');
+                submitBtn.classList.remove('flex');
+            }
+
+            // Run Dynamic Match Calculation when reaching Step 3
+            if (currentStep === 3) {
+                runTherapistMatcher();
+            }
+        }
+
+        function nextBookingStep() {
+            // Validation for Step 1 radio choice
+            if (currentStep === 1) {
+                const selectedFocus = document.querySelector('input[name="primary_focus"]:checked');
+                if (!selectedFocus) {
+                    alert('Please select your primary focus area to continue.');
+                    return;
+                }
+            }
+
+            if (currentStep < 4) {
+                currentStep++;
+                updateStepUI();
+            }
+        }
+
+        function prevBookingStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                updateStepUI();
+            }
+        }
+
+        // --- Clinical Matcher Logic ---
+        function runTherapistMatcher() {
+            const focusInput = document.querySelector('input[name="primary_focus"]:checked');
+            const focus = focusInput ? focusInput.value : "Grief & Loss";
+            const matchData = CLINICIAN_ROSTER[focus] || CLINICIAN_ROSTER["Grief & Loss"];
+
+            // Update DOM Elements
+            document.getElementById('match-avatar').textContent = matchData.initials;
+            document.getElementById('match-name').textContent = matchData.name;
+            document.getElementById('match-specialty').textContent = matchData.specialty;
+            document.getElementById('match-bio').textContent = matchData.bio;
+            document.getElementById('match-score-badge').textContent = matchData.score;
+
+            // Reset avatar background color classes
+            const avatarElem = document.getElementById('match-avatar');
+            avatarElem.className = `w-16 h-16 rounded-2xl ${matchData.bg} pop-border-sm flex items-center justify-center text-white font-extrabold text-xl display-font shrink-0`;
+
+            // Populate Hidden Form Inputs for Formspree Transmission
+            document.getElementById('hidden-therapist').value = matchData.name;
+            document.getElementById('hidden-score').value = matchData.score;
+        }
+
+        // --- Pricing Tier Dropdown Update Handler ---
+        function updatePricingTier(selectElem) {
+            document.getElementById('hidden-fee').value = selectElem.value;
+        }
+
+        // --- Form Submission Engine (Formspree AJAX handling) ---
+        const form = document.getElementById('gentle-steps-booking-form');
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const submitBtn = document.getElementById('submit-btn');
+            const originalBtnContent = submitBtn.innerHTML;
+
+            // Show Spinner State
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `<span class="spinner"></span> <span>Securing Match...</span>`;
+
+            const formData = new FormData(form);
+
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    // Success View State
+                    const modalBody = form.parentElement;
+                    modalBody.innerHTML = `
+                        <div class="p-8 sm:p-12 text-center space-y-6">
+                            <div class="w-20 h-20 bg-popTeal rounded-3xl pop-border flex items-center justify-center mx-auto text-white shadow-pop">
+                                <i data-lucide="check-circle" class="w-10 h-10 text-popDark"></i>
+                            </div>
+                            <h3 class="text-3xl font-extrabold text-popDark display-font">Session Intake Confirmed</h3>
+                            <p class="text-sm font-bold text-gray-700 max-w-md mx-auto">
+                                Your intake token has been encrypted and routed to your specialist. Check your email or WhatsApp shortly for your private encrypted calendar link.
+                            </p>
+                            <div class="pt-4">
+                                <button onclick="closeBooking(); location.reload();" class="px-8 py-3.5 bg-popYellow hover:bg-yellow-400 text-popDark font-extrabold text-sm rounded-2xl pop-border shadow-pop display-font">
+                                    Return to Homepage
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    lucide.createIcons();
+                } else {
+                    alert("Submission failed. Please check your connection and try again.");
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalBtnContent;
+                }
+            } catch (error) {
+                alert("An error occurred during submission. Please try again.");
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalBtnContent;
+            }
+        });
+    </script>
+</body>
+</html>
